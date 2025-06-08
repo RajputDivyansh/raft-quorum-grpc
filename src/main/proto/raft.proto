@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+option java_package = "com.quorum.raft.rpc_proto";
+option java_outer_classname = "RaftProto";
+
+service RaftService {
+  rpc RequestVote (VoteRequest) returns (VoteResponse);
+  rpc AppendEntries (AppendRequest) returns (AppendResponse);
+}
+
+message VoteRequest {
+  int32 term = 1;
+  int32 candidateId = 2;
+  int32 lastLogIndex = 3;
+  int32 lastLogTerm = 4;
+}
+
+message VoteResponse {
+  int32 term = 1;
+  bool voteGranted = 2;
+}
+
+message AppendRequest {
+  int32 term = 1;
+  int32 leaderId = 2;
+  repeated string entries = 3;
+}
+
+message AppendResponse {
+  int32 term = 1;
+  bool success = 2;
+}
